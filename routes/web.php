@@ -7,6 +7,8 @@ use App\Http\Controllers\HomeController;
 use App\Models\Curso;
 use Illuminate\Support\Facades\Mail;
 
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,9 +19,9 @@ use Illuminate\Support\Facades\Mail;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/', HomeController::class)->name('home');
-Route::resource('cursos',CursoController::class);// esto crea automaticamanete las rutas.
-Route::view('nosotros','nosotros')->name('nosotros');// para mostrar rutas estaticas, que no solicitan nada la base de datos
+//Route::get('/', HomeController::class)->name('home');
+//Route::resource('cursos',CursoController::class);// esto crea automaticamanete las rutas.
+//Route::view('nosotros','nosotros')->name('nosotros');// para mostrar rutas estaticas, que no solicitan nada la base de datos
 /* Route::get('contactanos',function(){
 
     Mail::to('jose@gamil.com')
@@ -27,11 +29,11 @@ Route::view('nosotros','nosotros')->name('nosotros');// para mostrar rutas estat
             return"mensaje enviado";
             
 })->name('contactanos'); */
-Route::get('contactanos', [ContactanosController::class,'index'])
-        ->name('contactanos.index');
+//Route::get('contactanos', [ContactanosController::class,'index'])
+   //     ->name('contactanos.index');
 
-Route::post('contactanos', [ContactanosController::class,'store'])
-        ->name('contactanos.store');
+//Route::post('contactanos', [ContactanosController::class,'store'])
+     //   ->name('contactanos.store');
 
 
     
@@ -45,14 +47,25 @@ Route::controller(CursoController::class)->group(function () {
     Route::get('cursos/{curso}/edit',[CursoController::class,'edit'])->name('cursos.edit');
     Route::put('cursos/{curso}',[CursoController::class, 'update'])->name('cursos.update');
     Route::delete('cursos/{curso}', [CursoController::class, 'destroy'])->name('cursos.destroy');} */
+
+    Route::get('/',function() {
+        return view('welcome');
+        });
    
 
+    Route::view('dashboard', 'dashboard')
+        ->middleware(['auth:sanctum', 'verified'])
+        ->name('dashboard');
+
+    Route::get('prueba',function() {
+        return 'accedistec ordered';
+        })->middleware('auth:sanctum','age');
+
+        Route::get('no-autorizado',function() {
+            return 'no accedistec ordered';});
 
 
-
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+/* 
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])
@@ -68,3 +81,4 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+ */
